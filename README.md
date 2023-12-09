@@ -10,23 +10,27 @@ Parser
 parser grammar ExprParser;
 options { tokenVocab=ExprLexer; }
 
-document: block+ NEWLINE * EOF?;
+document: block+ NEWLINE* EOF?;
 
 /**
  * A document is one or more block elements.
  * http://daringfireball.net/projects/markdown/syntax#block
  */
-block: NEWLINE*   // Blank lines at the begin of the document or extra blank lines between blocks are matched here.
-       (heading
-       )
-     ;
-     
-heading: ID+ (NEWLINE);
+block: NEWLINE* heading listing;
+text: NORMAL_CHAR | DIGIT;
+heading: text+ NEWLINE EQUAL+ NEWLINE;
+listing: SHARP+ SPACE text+ NEWLINE (HYPHEN SPACE text+ NEWLINE)+;
 ```
 Lexer
 ```antlr
 lexer grammar ExprLexer;
 
-ID: [a-zA-Z_][a-zA-Z_0-9]* ;
+NORMAL_CHAR: [a-zA-Z];   // This never match a, b, ecc .
+DIGIT: [0-9];
+
 NEWLINE: '\r'? '\n';
+EQUAL: '=';
+SHARP: '#';
+SPACE: ' ';
+HYPHEN : '-';
 ```
