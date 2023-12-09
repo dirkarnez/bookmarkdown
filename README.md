@@ -34,3 +34,33 @@ SHARP: '#';
 SPACE: ' ';
 HYPHEN : '-';
 ```
+
+### Reference
+```antlr
+primaryExpression
+    : Identifier
+    | Constant
+    | StringLiteral+
+    | '(' expression ')'
+    | genericSelection
+    | '__extension__'? '(' compoundStatement ')' // Blocks (GCC extension)
+    | '__builtin_va_arg' '(' unaryExpression ',' typeName ')'
+    | '__builtin_offsetof' '(' typeName ',' unaryExpression ')'
+    ;
+
+
+StringLiteral
+    : EncodingPrefix? '"' SCharSequence? '"'
+    ;
+
+fragment SCharSequence
+    : SChar+
+    ;
+
+fragment SChar
+    : ~["\\\r\n]
+    | EscapeSequence
+    | '\\\n'   // Added line
+    | '\\\r\n' // Added line
+    ;
+```
