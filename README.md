@@ -3,6 +3,7 @@ bookmarkdown
 WIP
 ### Reference
 - https://github.com/mar9000/antmark
+- [ANTLR Tutorial => Lexer rules in v4](https://riptutorial.com/antlr/topic/3271/lexer-rules-in-v4)
 
 ### Grammar
 Parser
@@ -72,3 +73,5 @@ fragment SChar
     | '\\\r\n' // Added line
     ;
 ```
+
+
