@@ -16,10 +16,13 @@ document: block+ NEWLINE* EOF?;
  * A document is one or more block elements.
  * http://daringfireball.net/projects/markdown/syntax#block
  */
+
+text: TEXT;
 block: NEWLINE* heading listing;
-text: NORMAL_CHAR | DIGIT;
-heading: text+ NEWLINE EQUAL+ NEWLINE;
-listing: SHARP+ SPACE text+ NEWLINE (HYPHEN SPACE text+ NEWLINE)+;
+
+heading: text NEWLINE EQUALLINE NEWLINE;
+listing: SHARP+ SPACE text NEWLINE listingItem+;
+listingItem: HYPHEN SPACE text NEWLINE;
 ```
 Lexer
 ```antlr
@@ -33,6 +36,11 @@ EQUAL: '=';
 SHARP: '#';
 SPACE: ' ';
 HYPHEN : '-';
+
+TEXT: SChar+;
+EQUALLINE: EQUAL+;
+fragment SChar
+    : ~["\\\r\n];
 ```
 
 ### Reference
